@@ -1,36 +1,31 @@
+import { ref } from "vue";
 import { storageService } from "./storageService";
 
+const tasks = ref(storageService.getTasks());
+
 export const taskService = {
-  getAll() {
-    return storageService.getTasks();
+  getTasks() {
+    return tasks;
   },
 
   add(name) {
-    const tasks = this.getAll();
     const newTask = { id: Date.now(), name, done: false };
-    const updated = [...tasks, newTask];
-    storageService.saveTasks(updated);
-    return updated;
+    tasks.value = [...tasks.value, newTask];
+    storageService.saveTasks(tasks.value);
   },
 
   delete(id) {
-    const tasks = this.getAll();
-    const updated = tasks.filter((t) => t.id !== id);
-    storageService.saveTasks(updated);
-    return updated;
+    tasks.value = tasks.value.filter((t) => t.id !== id);
+    storageService.saveTasks(tasks.value);
   },
 
   toggle(id) {
-    const tasks = this.getAll();
-    const updated = tasks.map((t) => (t.id === id ? { ...t, done: !t.done } : t));
-    storageService.saveTasks(updated);
-    return updated;
+    tasks.value = tasks.value.map((t) => (t.id === id ? { ...t, done: !t.done } : t));
+    storageService.saveTasks(tasks.value);
   },
 
   update(id, name) {
-    const tasks = this.getAll();
-    const updated = tasks.map((t) => (t.id === id ? { ...t, name } : t));
-    storageService.saveTasks(updated);
-    return updated;
+    tasks.value = tasks.value.map((t) => (t.id === id ? { ...t, name } : t));
+    storageService.saveTasks(tasks.value);
   },
 };
