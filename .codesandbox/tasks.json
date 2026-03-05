@@ -2,6 +2,10 @@
   // These tasks will run in order when initializing your CodeSandbox project.
   "setupTasks": [
     {
+      "name": "Pull Latest Code",
+      "command": "git pull origin main"
+    },
+    {
       "name": "Installing Dependencies",
       "command": "npm install"
     }
